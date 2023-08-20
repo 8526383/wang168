@@ -1,7 +1,7 @@
 DEFAULT_START_PORT=30000                         #默认起始端口
 DEFAULT_SOCKS_USERNAME="userb"                   #默认socks账号
 DEFAULT_SOCKS_PASSWORD="passwordb"               #默认socks密码
-DEFAULT_s5_socks = "noauth"			 #默认禁用账号密码认证
+DEFAULT_SOCKS_NOAUTH = "noauth"			 #默认禁用账号密码认证
 DEFAULT_WS_PATH="/ws"                            #默认ws路径
 DEFAULT_UUID=$(cat /proc/sys/kernel/random/uuid) #默认随机UUID
 
@@ -50,8 +50,8 @@ config_xray() {
 		read -p "SOCKS 密码 (默认 $DEFAULT_SOCKS_PASSWORD): " SOCKS_PASSWORD
 		SOCKS_PASSWORD=${SOCKS_PASSWORD:-$DEFAULT_SOCKS_PASSWORD}
 
-  		read -p "SOCKS (默认禁用账号密码认证，可手动输入password启用认证 $DEFAULT_s5_socks): " s5_auth
-		s5_auth=${s5_auth:-$DEFAULT_s5_socks}
+  		read -p "SOCKS (默认禁用账号密码认证，可手动输入password启用认证 $DEFAULT_SOCKS_NOAUTH): " s5_auth
+		s5_auth=${s5_auth:-$DEFAULT_SOCKS_NOAUTH}
 	elif [ "$config_type" == "vmess" ]; then
 		read -p "UUID (默认随机): " UUID
 		UUID=${UUID:-$DEFAULT_UUID}
