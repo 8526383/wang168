@@ -70,8 +70,8 @@ config_xray() {
 			config_content+="ip = \"${IP_ADDRESSES[i]}\"\n"
 			if [ "$s5_socks" == "password" ]; then
         			config_content+="[[inbounds.settings.accounts]]\n"
-				config_content+="user = \"$SOCKS_USERNAME\"\n"
-				config_content+="pass = \"$SOCKS_PASSWORD\"\n"
+        			config_content+="user = \"$SOCKS_USERNAME\"\n"
+        			config_content+="pass = \"$SOCKS_PASSWORD\"\n"
 		elif [ "$config_type" == "vmess" ]; then
 			config_content+="[[inbounds.settings.clients]]\n"
 			config_content+="id = \"$UUID\"\n"
@@ -99,9 +99,9 @@ config_xray() {
 	if [ "$config_type" == "socks" ]; then
 		if [ "$s5_socks" == "noauth" ]; then
         		echo "禁用账号密码认证."
-		elif [ "$s5_socks" == "password" ]; then
-  			echo "socks账号:$SOCKS_USERNAME"
-			echo "socks密码:$SOCKS_PASSWORD"
+	  	elif [ "$s5_socks" == "password" ]; then
+      			echo "socks账号:$SOCKS_USERNAME"
+      			echo "socks密码:$SOCKS_PASSWORD"
 	elif [ "$config_type" == "vmess" ]; then
 		echo "UUID:$UUID"
 		echo "ws路径:$WS_PATH"
