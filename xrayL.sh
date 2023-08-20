@@ -1,6 +1,7 @@
 DEFAULT_START_PORT=30000                         #默认起始端口
 DEFAULT_SOCKS_USERNAME="userb"                   #默认socks账号
 DEFAULT_SOCKS_PASSWORD="passwordb"               #默认socks密码
+s5_socks = "noauth"				 #默认禁用账号密码认证
 DEFAULT_WS_PATH="/ws"                            #默认ws路径
 DEFAULT_UUID=$(cat /proc/sys/kernel/random/uuid) #默认随机UUID
 
@@ -48,6 +49,9 @@ config_xray() {
 
 		read -p "SOCKS 密码 (默认 $DEFAULT_SOCKS_PASSWORD): " SOCKS_PASSWORD
 		SOCKS_PASSWORD=${SOCKS_PASSWORD:-$DEFAULT_SOCKS_PASSWORD}
+
+  		read -p "SOCKS (默认禁用账号密码认证，可手动输入password启用认证 $s5_socks): " s5_auth
+		s5_auth=${s5_auth:-$s5_socks}
 	elif [ "$config_type" == "vmess" ]; then
 		read -p "UUID (默认随机): " UUID
 		UUID=${UUID:-$DEFAULT_UUID}
@@ -62,12 +66,9 @@ config_xray() {
 		config_content+="tag = \"tag_$((i + 1))\"\n"
 		config_content+="[inbounds.settings]\n"
 		if [ "$config_type" == "socks" ]; then
-			config_content+="auth = \"noauth\"\n"
+			config_content+="auth = \"$s5_auth\"\n"
 			config_content+="udp = true\n"
 			config_content+="ip = \"${IP_ADDRESSES[i]}\"\n"
-			config_content+="[[inbounds.settings.accounts]]\n"
-			config_content+="user = \"$SOCKS_USERNAME\"\n"
-			config_content+="pass = \"$SOCKS_PASSWORD\"\n"
 		elif [ "$config_type" == "vmess" ]; then
 			config_content+="[[inbounds.settings.clients]]\n"
 			config_content+="id = \"$UUID\"\n"
