@@ -68,10 +68,9 @@ config_xray() {
 			config_content+="auth = \"$s5_auth\"\n"
 			config_content+="udp = true\n"
 			config_content+="ip = \"${IP_ADDRESSES[i]}\"\n"
-			if [ "$s5_socks" == "password" ]; then
-        			config_content+="[[inbounds.settings.accounts]]\n"
-        			config_content+="user = \"$SOCKS_USERNAME\"\n"
-        			config_content+="pass = \"$SOCKS_PASSWORD\"\n"
+        		config_content+="[[inbounds.settings.accounts]]\n"
+        		config_content+="user = \"$SOCKS_USERNAME\"\n"
+        		config_content+="pass = \"$SOCKS_PASSWORD\"\n"
 		elif [ "$config_type" == "vmess" ]; then
 			config_content+="[[inbounds.settings.clients]]\n"
 			config_content+="id = \"$UUID\"\n"
