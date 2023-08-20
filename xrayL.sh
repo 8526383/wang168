@@ -62,15 +62,12 @@ config_xray() {
 		config_content+="tag = \"tag_$((i + 1))\"\n"
 		config_content+="[inbounds.settings]\n"
 		if [ "$config_type" == "socks" ]; then
-			s5_socks = "noauth"
-			read -p "SOCKS (默认禁用账号密码认证，可手动输入password启用认证 $s5_socks): " s5_auth
-			s5_auth=${s5_auth:-$s5_socks}
-			config_content+="auth = \"$s5_auth\"\n"
+			config_content+="auth = \"noauth\"\n"
 			config_content+="udp = true\n"
 			config_content+="ip = \"${IP_ADDRESSES[i]}\"\n"
-        		config_content+="[[inbounds.settings.accounts]]\n"
-        		config_content+="user = \"$SOCKS_USERNAME\"\n"
-        		config_content+="pass = \"$SOCKS_PASSWORD\"\n"
+			config_content+="[[inbounds.settings.accounts]]\n"
+			config_content+="user = \"$SOCKS_USERNAME\"\n"
+			config_content+="pass = \"$SOCKS_PASSWORD\"\n"
 		elif [ "$config_type" == "vmess" ]; then
 			config_content+="[[inbounds.settings.clients]]\n"
 			config_content+="id = \"$UUID\"\n"
@@ -96,8 +93,8 @@ config_xray() {
 	echo "起始端口:$START_PORT"
 	echo "结束端口:$(($START_PORT + $i - 1))"
 	if [ "$config_type" == "socks" ]; then
-      		echo "socks账号:$SOCKS_USERNAME"
-      		echo "socks密码:$SOCKS_PASSWORD"
+		echo "socks账号:$SOCKS_USERNAME"
+		echo "socks密码:$SOCKS_PASSWORD"
 	elif [ "$config_type" == "vmess" ]; then
 		echo "UUID:$UUID"
 		echo "ws路径:$WS_PATH"
