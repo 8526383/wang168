@@ -96,11 +96,8 @@ config_xray() {
 	echo "起始端口:$START_PORT"
 	echo "结束端口:$(($START_PORT + $i - 1))"
 	if [ "$config_type" == "socks" ]; then
-		if [ "$s5_socks" == "noauth" ]; then
-        		echo "禁用账号密码认证."
-	  	elif [ "$s5_socks" == "password" ]; then
-      			echo "socks账号:$SOCKS_USERNAME"
-      			echo "socks密码:$SOCKS_PASSWORD"
+      		echo "socks账号:$SOCKS_USERNAME"
+      		echo "socks密码:$SOCKS_PASSWORD"
 	elif [ "$config_type" == "vmess" ]; then
 		echo "UUID:$UUID"
 		echo "ws路径:$WS_PATH"
