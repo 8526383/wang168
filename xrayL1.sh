@@ -35,14 +35,14 @@ EOF
 config_xray() {
 	config_type=$1
 	mkdir -p /etc/xrayL
-	if [ "$config_type" != "http" ] && [ "$config_type" != "vmess" ]; then
-		echo "类型错误！仅支持http和vmess."
+	if [ "$config_type" != "socks" ] && [ "$config_type" != "vmess" ]; then
+		echo "类型错误！仅支持socks和vmess."
 		exit 1
 	fi
 
 	read -p "起始端口 (默认 $DEFAULT_START_PORT): " START_PORT
 	START_PORT=${START_PORT:-$DEFAULT_START_PORT}
-	if [ "$config_type" == "http" ]; then
+	if [ "$config_type" == "socks" ]; then
 		read -p "SOCKS 账号 (默认 $DEFAULT_SOCKS_USERNAME): " SOCKS_USERNAME
 		SOCKS_USERNAME=${SOCKS_USERNAME:-$DEFAULT_SOCKS_USERNAME}
 
@@ -58,10 +58,10 @@ config_xray() {
 	for ((i = 0; i < ${#IP_ADDRESSES[@]}; i++)); do
 		config_content+="[[inbounds]]\n"
 		config_content+="port = $((START_PORT + i))\n"
-		config_content+="protocol = \"$config_type\"\n"
+		config_content+="protocol = \"http\"\n"
 		config_content+="tag = \"tag_$((i + 1))\"\n"
 		config_content+="[inbounds.settings]\n"
-		if [ "$config_type" == "http" ]; then
+		if [ "$config_type" == "socks" ]; then
 			config_content+="auth = \"password\"\n"
 			config_content+="udp = true\n"
 			config_content+="ip = \"${IP_ADDRESSES[i]}\"\n"
@@ -92,7 +92,7 @@ config_xray() {
 	echo "生成 $config_type 配置完成"
 	echo "起始端口:$START_PORT"
 	echo "结束端口:$(($START_PORT + $i - 1))"
-	if [ "$config_type" == "http" ]; then
+	if [ "$config_type" == "socks" ]; then
 		echo "socks账号:$SOCKS_USERNAME"
 		echo "socks密码:$SOCKS_PASSWORD"
 	elif [ "$config_type" == "vmess" ]; then
@@ -110,11 +110,11 @@ main() {
 	fi
 	if [ "$config_type" == "vmess" ]; then
 		config_xray "vmess"
-	elif [ "$config_type" == "http" ]; then
-		config_xray "http"
+	elif [ "$config_type" == "socks" ]; then
+		config_xray "socks"
 	else
 		echo "未正确选择类型，使用默认sokcs配置."
-		config_xray "http"
+		config_xray "socks"
 	fi
 }
 main "$@"
