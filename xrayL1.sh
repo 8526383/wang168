@@ -111,7 +111,7 @@ main() {
 	if [ "$config_type" == "vmess" ]; then
 		config_xray "vmess"
 	elif [ "$config_type" == "socks" ]; then
-		config_xray "socks"
+		config_xray "http"
 	else
 		echo "未正确选择类型，使用默认sokcs配置."
 		config_xray "http"
