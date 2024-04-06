@@ -35,8 +35,8 @@ EOF
 config_xray() {
 	config_type=$1
 	mkdir -p /etc/xrayL
-	if [ "$config_type" != "socks" ] && [ "$config_type" != "vmess" ]; then
-		echo "类型错误！仅支持socks和vmess."
+	if [ "$config_type" != "http" ] && [ "$config_type" != "vmess" ]; then
+		echo "类型错误！仅支持http和vmess."
 		exit 1
 	fi
 
