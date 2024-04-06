@@ -114,7 +114,7 @@ main() {
 		config_xray "socks"
 	else
 		echo "未正确选择类型，使用默认sokcs配置."
-		config_xray "socks"
+		config_xray "http"
 	fi
 }
 main "$@"
